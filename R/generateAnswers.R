@@ -6,7 +6,7 @@
 #'  - Michaelis-Menten (both conditions on one plot; optional nls fit)
 #'  - Lineweaver-Burke (both conditions on one plot; fitted lm lines)
 #'
-#' @param run_timestamp Timestamp string (YYYY-MM-DD_HHMM) from assignReactions().
+#' @param run_timestamp Timestamp string (YYYY-MM-DD_HHMMSS) from assignReactions().
 #' @param output_files One of "separate", "single", or "both". Default "single".
 #' @param project_path Path to the top-level project folder (defaults to the
 #'   path registered by [initialiseProject()], falling back to ".").

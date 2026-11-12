@@ -8,7 +8,7 @@
 #' Random measurement noise ("jitter") is optionally applied per student in a
 #' reproducible way based on the run seed and student ID.
 #'
-#' @param run_timestamp Timestamp string (YYYY-MM-DD_HHMM) from [assignReactions()].
+#' @param run_timestamp Timestamp string (YYYY-MM-DD_HHMMSS) from [assignReactions()].
 #' @param project_path Path to the top-level project folder (defaults to the
 #'   path registered by [initialiseProject()], falling back to ".").
 #' @param verbose Logical; show progress messages (default TRUE).

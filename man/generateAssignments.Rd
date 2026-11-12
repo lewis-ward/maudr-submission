@@ -18,7 +18,7 @@ generateAssignments(
 )
 }
 \arguments{
-\item{run_timestamp}{Timestamp string (YYYY-MM-DD_HHMM) from \code{\link[=assignReactions]{assignReactions()}}.}
+\item{run_timestamp}{Timestamp string (YYYY-MM-DD_HHMMSS) from \code{\link[=assignReactions]{assignReactions()}}.}
 
 \item{project_path}{Path to the top-level project folder (defaults to the
 path registered by \code{\link[=initialiseProject]{initialiseProject()}}, falling back to ".").}

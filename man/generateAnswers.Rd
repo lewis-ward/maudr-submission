@@ -12,7 +12,7 @@ generateAnswers(
 )
 }
 \arguments{
-\item{run_timestamp}{Timestamp string (YYYY-MM-DD_HHMM) from assignReactions().}
+\item{run_timestamp}{Timestamp string (YYYY-MM-DD_HHMMSS) from assignReactions().}
 
 \item{output_files}{One of "separate", "single", or "both". Default "single".}
 

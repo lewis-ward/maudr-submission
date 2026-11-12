@@ -42,7 +42,9 @@ assignReactions <- function(
   # initialiseProject(path = project_path, verbose = FALSE)
 
   # Create timestamped subfolder for this run
-  timestamp <- make_timestamp()
+  timestamp <- make_timestamp(
+    file.path(project_path, "output", "assignments_output")
+  )
   assignment_dir <- file.path(
     project_path,
     "output",
