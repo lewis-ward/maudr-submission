@@ -8,7 +8,7 @@ assignReactions(
   student_file = NULL,
   enzyme_file = NULL,
   project_path = getOption("maudr.project_path", "."),
-  seed = 1234,
+  seed = NULL,
   verbose = TRUE
 )
 }
@@ -23,7 +23,9 @@ parameters (e.g. \code{reaction_parameters.xlsx}).}
 \code{\link[=initialiseProject]{initialiseProject()}}. Defaults to the path registered by the most recent
 call to \code{\link[=initialiseProject]{initialiseProject()}}, falling back to the current working directory.}
 
-\item{seed}{Random seed for reproducibility (default = 1234).}
+\item{seed}{Random seed for reproducibility. If \code{NULL} (default), a random
+seed is chosen and saved in the metadata, so the run can be repeated
+by passing that seed.}
 
 \item{verbose}{Logical; if TRUE (default), prints progress messages.}
 }

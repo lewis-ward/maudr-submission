@@ -16,7 +16,9 @@
 #' @param project_path Path to the top-level project folder created by
 #'   [initialiseProject()]. Defaults to the path registered by the most recent
 #'   call to [initialiseProject()], falling back to the current working directory.
-#' @param seed Random seed for reproducibility (default = 1234).
+#' @param seed Random seed for reproducibility. If `NULL` (default), a random
+#'   seed is chosen and saved in the metadata, so the run can be repeated
+#'   by passing that seed.
 #' @param verbose Logical; if TRUE (default), prints progress messages.
 #'
 #' @return Invisibly returns a list with:
@@ -35,7 +37,7 @@ assignReactions <- function(
   student_file = NULL,
   enzyme_file = NULL,
   project_path = getOption("maudr.project_path", "."),
-  seed = 1234,
+  seed = NULL,
   verbose = TRUE
 ) {
   # Ensure project folder structure exists
@@ -106,6 +108,13 @@ assignReactions <- function(
     )
 
   # --- Random assignment of reaction conditions ----------------------------------------------
+  if (is.null(seed)) {
+    seed <- sample.int(999999, 1)
+  }
+  if (verbose) {
+    message("Using seed ", seed, " (saved in setup_metadata.xlsx)")
+  }
+  
   set.seed(seed)
 
   rxn_substr <- unique(enzymes$rxn_substrate)
