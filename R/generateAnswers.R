@@ -224,11 +224,26 @@ generateAnswers <- function(
     xmax <- max(df_lb$x, na.rm = TRUE)
     pad <- 0.1 * (xmax - xmin)
     xlim <- c(xmin - pad, xmax + pad)
-
+    
+    ymax <- max(df_lb$y, na.rm = TRUE)
+    ylim <- c(-0.1 * ymax, ymax * 1.05)
+    
     ggplot2::ggplot(df_lb, ggplot2::aes(x = x, y = y, colour = rxn_condition)) +
+      ggplot2::geom_hline(yintercept = 0, colour = "grey50") +
+      ggplot2::geom_vline(xintercept = 0, colour = "grey50") +
+      ggplot2::geom_abline(
+        data = fits,
+        ggplot2::aes(
+          intercept = intercept,
+          slope = slope,
+          colour = rxn_condition
+        )
+      ) +
       ggplot2::geom_point() +
-      ggplot2::geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
-      ggplot2::coord_cartesian(xlim = xlim) +
+      ggplot2::coord_cartesian(
+        xlim = xlim,
+        ylim = ylim
+      ) +
       ggplot2::labs(
         x = "1 / [S] (1/mM)",
         y = "1 / rate (min/\u0394Abs)",
