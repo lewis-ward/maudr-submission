@@ -112,37 +112,7 @@ generateAnswers <- function(
   est_params <- rate_dat |>
     dplyr::group_by(student_id, rxn_substrate, rxn_condition) |>
     dplyr::summarise(
-      {
-        df <- dplyr::pick(substrate_conc, rate) |>
-          dplyr::filter(substrate_conc > 0, is.finite(rate), rate >= 0)
-
-        if (nrow(df) < 3) {
-          tibble::tibble(Km = NA_real_, Vmax = NA_real_)
-        } else {
-          tryCatch(
-            {
-              start <- list(
-                Vmax = max(df$rate, na.rm = TRUE),
-                Km = stats::median(df$substrate_conc, na.rm = TRUE)
-              )
-              fit <- stats::nls(
-                rate ~ Vmax * substrate_conc / (Km + substrate_conc),
-                data = df,
-                start = start,
-                control = list(warnOnly = TRUE)
-              )
-              pars <- coef(fit)
-              tibble::tibble(
-                Km = round(pars[["Km"]], 3),
-                Vmax = round(pars[["Vmax"]], 3)
-              )
-            },
-            error = function(e) {
-              tibble::tibble(Km = NA_real_, Vmax = NA_real_)
-            }
-          )
-        }
-      },
+      fit_mm(dplyr::pick(substrate_conc, rate)),
       .groups = "drop"
     )
 

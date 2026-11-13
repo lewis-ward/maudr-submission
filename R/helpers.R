@@ -12,6 +12,38 @@ make_timestamp <- function(base_dir) {
   run_id
 }
 
+fit_mm <- function(df) {
+  df <- df |>
+    dplyr::filter(substrate_conc > 0, is.finite(rate), rate >= 0)
+  
+  if (nrow(df) < 3) {
+    return(tibble::tibble(Km = NA_real_, Vmax = NA_real_))
+  }
+  
+  tryCatch(
+    {
+      fit <- stats::nls(
+        rate ~ Vmax * substrate_conc / (Km + substrate_conc),
+        data = df,
+        start = list(
+          Vmax = max(df$rate, na.rm = TRUE),
+          Km = stats::median(df$substrate_conc, na.rm = TRUE)
+        ),
+        algorithm = "port",
+        lower = c(Vmax = 0, Km = 0)
+      )
+      pars <- stats::coef(fit)
+      tibble::tibble(
+        Km = round(pars[["Km"]], 3),
+        Vmax = round(pars[["Vmax"]], 3)
+      )
+    },
+    error = function(e) {
+      tibble::tibble(Km = NA_real_, Vmax = NA_real_)
+    }
+  )
+}
+
 .check_project <- function(path) {
   if (
     !dir.exists(file.path(path, "output")) ||
