@@ -14,7 +14,7 @@ generateAssignments(
   substr_conc = c(0, 10, 20, 40, 80, 160),
   time_vec = c(0.17, 0.33, 0.5, 0.66, 0.83, 1),
   use_jitter = TRUE,
-  jitter_sd = 0.02
+  jitter_sd = 0.0025
 )
 }
 \arguments{
@@ -37,8 +37,9 @@ path registered by \code{\link[=initialiseProject]{initialiseProject()}}, fallin
 
 \item{use_jitter}{Logical; add random noise to absorbances (default TRUE).}
 
-\item{jitter_sd}{Numeric; SD of additive noise if \code{use_jitter = TRUE}
-(default 0.02, i.e. ±2\% variability).}
+\item{jitter_sd}{Standard deviation of the normally distributed noise
+added to each absorbance reading, in absorbance units (default 0.0025).
+Readings are capped at 0.}
 }
 \value{
 Invisibly returns TRUE after writing all student assignment files

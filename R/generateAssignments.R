@@ -18,8 +18,9 @@
 #' @param substr_conc Vector of substrate concentrations in mM.
 #' @param time_vec Vector of reaction time points in minutes.
 #' @param use_jitter Logical; add random noise to absorbances (default TRUE).
-#' @param jitter_sd Numeric; SD of additive noise if `use_jitter = TRUE`
-#'   (default 0.02, i.e. ±2% variability).
+#' @param jitter_sd Standard deviation of the normally distributed noise
+#'   added to each absorbance reading, in absorbance units (default 0.0025).
+#'   Readings are capped at 0.
 #'
 #' @return Invisibly returns TRUE after writing all student assignment files
 #'   and updating metadata.
@@ -35,7 +36,7 @@ generateAssignments <- function(
   substr_conc = c(0, 10, 20, 40, 80, 160),
   time_vec = c(0.17, 0.33, 0.5, 0.66, 0.83, 1),
   use_jitter = TRUE,
-  jitter_sd = 0.02
+  jitter_sd = 0.0025
 ) {
   # --- Locate metadata -------------------------------------------------------
   assignment_dir <- file.path(
@@ -139,7 +140,7 @@ generateAssignments <- function(
   }
 
   all_data <- all_data |>
-    dplyr::mutate(absorbance = round(absorbance, 3)) |>
+    dplyr::mutate(absorbance = round(pmax(absorbance, 0), 3)) |>
     dplyr::select(
       student_id,
       rxn_substrate,
